@@ -2,15 +2,21 @@ package com.fz.premanager;
 
 import android.content.SharedPreferences;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.gson.Gson;
 import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,6 +32,7 @@ public class PreferenceManagerImpl implements IPreferenceManager, IParcelable {
      */
     @NonNull
     private final SharedPreferences sharedPreferences;
+    private Gson mGson;
 
     public PreferenceManagerImpl(@NonNull SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
@@ -191,5 +198,46 @@ public class PreferenceManagerImpl implements IPreferenceManager, IParcelable {
     @Override
     public boolean saveParcelable(String key, Parcelable value) {
         return false;
+    }
+
+    @Override
+    public <T extends Parcelable> boolean saveArrayListParcelable(String key, List<T> values) {
+        String content = getGson().toJson(values);
+        return save(key, content);
+    }
+
+    @Override
+    public <T extends Parcelable> List<T> readArrayListParcelable(String key, Type type) {
+        String content = read(key, "");
+        if (!TextUtils.isEmpty(content)) {
+            List<T> result = getGson().fromJson(content, type);
+            return result != null ? result : new ArrayList<>();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public <T extends Serializable> boolean saveArrayList(String key, List<T> values) {
+        String content = getGson().toJson(values);
+        return save(key, content);
+    }
+
+    @Override
+    public <T extends Serializable> List<T> readArrayList(String key, Type type) {
+        String content = read(key, "");
+        if (!TextUtils.isEmpty(content)) {
+            List<T> result = getGson().fromJson(content, type);
+            return result != null ? result : new ArrayList<>();
+        }
+        return new ArrayList<>();
+    }
+
+    private Gson getGson() {
+        Gson gson = mGson;
+        if (gson == null) {
+            gson = new Gson();
+            mGson = gson;
+        }
+        return gson;
     }
 }

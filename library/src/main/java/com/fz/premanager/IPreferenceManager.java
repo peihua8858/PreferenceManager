@@ -1,7 +1,7 @@
 package com.fz.premanager;
 
-import android.content.SharedPreferences.*;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,6 +10,9 @@ import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,7 +23,7 @@ import java.util.Set;
  * @version 1.0
  * @date 2020/6/23 14:20
  */
-public interface IPreferenceManager extends SharedPreferences, Editor {
+public interface IPreferenceManager extends SharedPreferences, Editor ,IParcelable{
     /**
      * 存储key -value
      *
@@ -630,5 +633,32 @@ public interface IPreferenceManager extends SharedPreferences, Editor {
     @Override
     default void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
         getPreferences().unregisterOnSharedPreferenceChangeListener(listener);
+    }
+
+    /**
+     * 存储集合数据
+     *
+     * @param key
+     * @param values
+     * @author dingpeihua
+     * @date 2022/1/13 9:24
+     * @version 1.0
+     */
+    default <T extends Serializable> boolean saveArrayList(String key, List<T> values) {
+        throw new UnsupportedOperationException("Not implements.");
+    }
+
+    /**
+     * 读取Parcelable集合数据
+     *
+     * @param key
+     * @param type
+     * @return
+     * @author dingpeihua
+     * @date 2022/1/13 9:32
+     * @version 1.0
+     */
+    default <T extends Serializable> List<T> readArrayList(String key, Type type) {
+        throw new UnsupportedOperationException("Not implements.");
     }
 }

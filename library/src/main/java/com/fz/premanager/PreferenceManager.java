@@ -2,12 +2,16 @@ package com.fz.premanager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -113,6 +117,36 @@ public class PreferenceManager implements IPreferenceManager {
     @Override
     public <T> T read(String key, Class<T> clazz) {
         return mRealForeverManager.read(key, clazz);
+    }
+
+    @Override
+    public <T extends Parcelable> T readParcelable(String key, Class<T> clazz) {
+        return mRealForeverManager.readParcelable(key, clazz);
+    }
+
+    @Override
+    public boolean saveParcelable(String key, Parcelable value) {
+        return saveParcelable(key, value);
+    }
+
+    @Override
+    public <T extends Parcelable> boolean saveArrayListParcelable(String key, List<T> values) {
+        return mRealForeverManager.saveArrayListParcelable(key, values);
+    }
+
+    @Override
+    public <T extends Parcelable> List<T> readArrayListParcelable(String key, Type type) {
+        return mRealForeverManager.readArrayListParcelable(key, type);
+    }
+
+    @Override
+    public <T extends Serializable> boolean saveArrayList(String key, List<T> values) {
+        return mRealForeverManager.saveArrayList(key, values);
+    }
+
+    @Override
+    public <T extends Serializable> List<T> readArrayList(String key, Type type) {
+        return mRealForeverManager.readArrayList(key, type);
     }
 }
 

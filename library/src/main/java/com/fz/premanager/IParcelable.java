@@ -2,6 +2,9 @@ package com.fz.premanager;
 
 import android.os.Parcelable;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
 /**
  * 安卓序列化
  *
@@ -35,6 +38,33 @@ public interface IParcelable {
      * @version 1.0
      */
     default boolean saveParcelable(String key, Parcelable value) {
+        throw new UnsupportedOperationException("Not implements.");
+    }
+
+    /**
+     * 存储Parcelable集合数据
+     *
+     * @param key
+     * @param values
+     * @author dingpeihua
+     * @date 2022/1/13 9:24
+     * @version 1.0
+     */
+    default <T extends Parcelable> boolean saveArrayListParcelable(String key, List<T> values) {
+        throw new UnsupportedOperationException("Not implements.");
+    }
+
+    /**
+     * 读取Parcelable集合数据
+     *
+     * @param key
+     * @param type
+     * @return
+     * @author dingpeihua
+     * @date 2022/1/13 9:32
+     * @version 1.0
+     */
+    default <T extends Parcelable> List<T> readArrayListParcelable(String key, Type type) {
         throw new UnsupportedOperationException("Not implements.");
     }
 }
