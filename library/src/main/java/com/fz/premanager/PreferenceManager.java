@@ -126,7 +126,7 @@ public class PreferenceManager implements IPreferenceManager {
 
     @Override
     public boolean saveParcelable(String key, Parcelable value) {
-        return saveParcelable(key, value);
+        return mRealForeverManager.saveParcelable(key, value);
     }
 
     @Override
@@ -147,6 +147,14 @@ public class PreferenceManager implements IPreferenceManager {
     @Override
     public <T extends Serializable> List<T> readArrayList(String key, Type type) {
         return mRealForeverManager.readArrayList(key, type);
+    }
+
+    public static <T> void saveValue(String key, T value) {
+        getInstance().save(key, value);
+    }
+
+    public static <T> void readValue(String key, T value) {
+        getInstance().read(key, value);
     }
 }
 

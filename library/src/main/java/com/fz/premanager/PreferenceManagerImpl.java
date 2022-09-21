@@ -192,12 +192,14 @@ public class PreferenceManagerImpl implements IPreferenceManager, IParcelable {
 
     @Override
     public <T extends Parcelable> T readParcelable(String key, Class<T> clazz) {
-        return null;
+        String content = read(key, "");
+        return getGson().fromJson(content, clazz);
     }
 
     @Override
     public boolean saveParcelable(String key, Parcelable value) {
-        return false;
+        String content = getGson().toJson(value);
+        return save(key, content);
     }
 
     @Override
