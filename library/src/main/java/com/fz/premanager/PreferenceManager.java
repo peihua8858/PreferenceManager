@@ -149,12 +149,12 @@ public class PreferenceManager implements IPreferenceManager {
         return mRealForeverManager.readArrayList(key, type);
     }
 
-    public static <T> void saveValue(String key, T value) {
-        getInstance().save(key, value);
+    public static <T> boolean saveValue(String key, T value) {
+        return getInstance().save(key, value);
     }
 
-    public static <T> void readValue(String key, T value) {
-        getInstance().read(key, value);
+    public static <T> T readValue(String key, T value) {
+        return getInstance().read(key, value);
     }
 }
 
