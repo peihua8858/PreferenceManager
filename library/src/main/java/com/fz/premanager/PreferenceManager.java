@@ -156,5 +156,13 @@ public class PreferenceManager implements IPreferenceManager {
     public static <T> T readValue(String key, T value) {
         return getInstance().read(key, value);
     }
+
+    public static void removeKey(String key) {
+        getInstance().remove(key);
+    }
+
+    public static void clearAll() {
+        getInstance().clear();
+    }
 }
 

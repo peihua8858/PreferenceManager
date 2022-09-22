@@ -119,10 +119,15 @@ public class PreferenceManagerImpl implements IPreferenceManager, IParcelable {
             returnValue = getInt(key, 0);
         } else if (Long.class.isAssignableFrom(clazz)) {
             returnValue = getLong(key, 0L);
+        } else if (Short.class.isAssignableFrom(clazz)) {
+            returnValue = getShort(key, (short) 0);
+        } else if (Double.class.isAssignableFrom(clazz)) {
+            returnValue = getDouble(key, 0.0);
         } else if (Parcelable.class.isAssignableFrom(clazz)) {
             returnValue = readParcelable(key, clazz.asSubclass(Parcelable.class));
         } else {
-            returnValue = getString(key);
+            String content = getString(key);
+            return getGson().fromJson(content, clazz);
         }
         try {
             return clazz.cast(returnValue);
@@ -152,10 +157,15 @@ public class PreferenceManagerImpl implements IPreferenceManager, IParcelable {
             editor.putInt(key, (Integer) value);
         } else if (value instanceof Long) {
             editor.putLong(key, (Long) value);
+        } else if (value instanceof Short) {
+            editor.putString(key, String.valueOf(value));
+        } else if (value instanceof Double) {
+            editor.putString(key, String.valueOf(value));
         } else if (value instanceof Parcelable) {
             saveParcelable(key, (Parcelable) value);
         } else {
-            KLog.e("Not support data type:" + value.getClass());
+            String content = getGson().toJson(value);
+            editor.putString(key, content);
         }
     }
 
