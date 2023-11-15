@@ -219,6 +219,16 @@ public class PreferenceManagerImpl implements IPreferenceManager, IParcelable {
     }
 
     @Override
+    public <T extends Parcelable> List<T> readArrayListParcelable(String key, Class<List<T>> type) {
+        String content = read(key, "");
+        if (!TextUtils.isEmpty(content)) {
+            List<T> result = getGson().fromJson(content, type);
+            return result != null ? result : new ArrayList<>();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
     public <T extends Parcelable> List<T> readArrayListParcelable(String key, Type type) {
         String content = read(key, "");
         if (!TextUtils.isEmpty(content)) {
@@ -229,13 +239,13 @@ public class PreferenceManagerImpl implements IPreferenceManager, IParcelable {
     }
 
     @Override
-    public <T extends Serializable> boolean saveArrayList(String key, List<T> values) {
+    public <T> boolean saveArrayList(String key, List<T> values) {
         String content = getGson().toJson(values);
         return save(key, content);
     }
 
     @Override
-    public <T extends Serializable> List<T> readArrayList(String key, Type type) {
+    public <T> List<T> readArrayList(String key, Type type) {
         String content = read(key, "");
         if (!TextUtils.isEmpty(content)) {
             List<T> result = getGson().fromJson(content, type);

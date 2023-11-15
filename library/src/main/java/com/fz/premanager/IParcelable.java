@@ -54,6 +54,10 @@ public interface IParcelable {
         throw new UnsupportedOperationException("Not implements.");
     }
 
+    default <T extends Parcelable> List<T> readArrayListParcelable(String key, Class<List<T>> clazz) {
+        throw new UnsupportedOperationException("Not implements.");
+    }
+
     /**
      * 读取Parcelable集合数据
      *

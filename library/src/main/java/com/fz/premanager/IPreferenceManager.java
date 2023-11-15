@@ -2,6 +2,7 @@ package com.fz.premanager;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -644,7 +645,7 @@ public interface IPreferenceManager extends SharedPreferences, Editor ,IParcelab
      * @date 2022/1/13 9:24
      * @version 1.0
      */
-    default <T extends Serializable> boolean saveArrayList(String key, List<T> values) {
+    default <T> boolean saveArrayList(String key, List<T> values) {
         throw new UnsupportedOperationException("Not implements.");
     }
 
@@ -658,7 +659,7 @@ public interface IPreferenceManager extends SharedPreferences, Editor ,IParcelab
      * @date 2022/1/13 9:32
      * @version 1.0
      */
-    default <T extends Serializable> List<T> readArrayList(String key, Type type) {
+    default <T> List<T> readArrayList(String key, Type type) {
         throw new UnsupportedOperationException("Not implements.");
     }
 }

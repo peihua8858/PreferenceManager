@@ -135,17 +135,22 @@ public class PreferenceManager implements IPreferenceManager {
     }
 
     @Override
+    public <T extends Parcelable> List<T> readArrayListParcelable(String key, Class<List<T>> type) {
+        return mRealForeverManager.readArrayListParcelable(key, type);
+    }
+
+    @Override
     public <T extends Parcelable> List<T> readArrayListParcelable(String key, Type type) {
         return mRealForeverManager.readArrayListParcelable(key, type);
     }
 
     @Override
-    public <T extends Serializable> boolean saveArrayList(String key, List<T> values) {
+    public <T> boolean saveArrayList(String key, List<T> values) {
         return mRealForeverManager.saveArrayList(key, values);
     }
 
     @Override
-    public <T extends Serializable> List<T> readArrayList(String key, Type type) {
+    public <T> List<T> readArrayList(String key, Type type) {
         return mRealForeverManager.readArrayList(key, type);
     }
 
